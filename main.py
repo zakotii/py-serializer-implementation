@@ -1,6 +1,12 @@
+import sys
+import os
+
 import json
-from .models import Car
-from .serializers import CarSerializer
+from car.models import Car
+from car.serializers import CarSerializer
+
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 
 def serialize_car_object(car: Car) -> str:
@@ -8,7 +14,7 @@ def serialize_car_object(car: Car) -> str:
     Принимает объект Car и возвращает JSON-представление.
     """
     serializer = CarSerializer(car)
-    return json.dumps(serializer.data)
+    return json.dumps(serializer.data, separators=(",", ":")).encode("utf-8")
 
 
 def deserialize_car_object(car_json: str) -> Car:
